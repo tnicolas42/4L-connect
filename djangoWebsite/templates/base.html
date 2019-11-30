@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>{% block title %}Titre du site{% endblock %}</title>
+   <link rel="stylesheet" href="/static/css/base_style.css"/>
+   {% block head %}{% endblock head %}
+</head>
+<body>
+	<header>
+		{% block notif %}
+			{% if messages %}
+				<div class="messages">
+					{% for message in messages %}
+						<div class="{{ message.tags }}">
+							<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+							{{ message }}
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endblock notif %}
+		<nav>
+			{% block nav %}
+				<ul class="topMenu">
+					<li class="dropdown">
+						<a class="dropbtn" href="{% url "mainApp:home" %}">testapp</a>
+						<div class="dropdown-content">
+							<a href="{% url "mainApp:home" %}">Home</a>
+						</div>
+					</li>
+					{% if user.is_authenticated %}
+						<li style="float:right">
+							<a href="{% url 'global:logout' %}?next={% if next %}{{ next }}{% else %}{{ request.path }}{% endif %}">logout {{ user.username }}</a>
+						</li>
+					{% else %}
+						<li style="float:right">
+							<a href="{% url 'global:login' %}?next={{ request.path }}">login</a>
+						</li>
+					{% endif %}
+					{% if request.user.is_staff %}
+						<li style="float:right">
+							<a href="/admin">Admin</a>
+						</li>
+					{% endif %}
+				</ul>
+			{% endblock %}
+		</nav>
+	</header>
+	<section id="content">
+		{% block content %}{% endblock %}
+	</section>
+	<footer>
+		{% block pagination %}
+			{% if is_paginated %}
+				<div class="pagination">
+					{% if page_obj.has_previous %}
+						<a href="?page=1">first</a>
+						<a href="?page={{ page_obj.previous_page_number }}">prev</a>
+					{% endif %}
+					Page {{ page_obj.number }} on {{ page_obj.paginator.num_pages }}
+					{% if page_obj.has_next %}
+						<a href="?page={{ page_obj.next_page_number }}">next</a>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% endblock %}
+	</footer>
+</body>
+</html>

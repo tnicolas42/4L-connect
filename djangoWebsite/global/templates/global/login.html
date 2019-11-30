@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>Connection</h1>
+
+	{% if user.is_authenticated %}
+		You are connected as {{ user.username }} !
+	{% else %}
+		<form method="post" action="{{ request.path }}?next={% if next %}{{ next }}{% endif %}">
+		  {% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Connection" />
+		</form>
+	{% endif %}
+{% endblock content %}

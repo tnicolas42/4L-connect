@@ -1,0 +1,165 @@
+:root {
+	--bar-main-color: #0000FF;
+	--bar-second-color: #00009e;
+	--bar-text-color: #FFFFFF;
+
+	--message-debug-color: #0000FFE0;
+	--message-info-color: #808080E0;
+	--message-success-color: #adff2fE0;
+	--message-warning-color: #ffa500E0;
+	--message-error-color: #FF0000E0;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#content {
+	margin: 1%;
+}
+
+/*
+start menu bar
+*/
+.topMenu {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	background-color: var(--bar-main-color);
+}
+
+.topMenu li {
+	float: left;
+}
+
+.topMenu li a,  .topMenu .dropbtn {
+	display: inline-block;
+	color: var(--bar-text-color);
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+.topMenu li a:hover,  .topMenu .dropdown:hover .dropbtn {
+	background-color: var(--bar-second-color);
+}
+
+.topMenu li.dropdown {
+	display: inline-block;
+}
+
+.topMenu .dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 1;
+}
+
+.topMenu .dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+}
+
+.topMenu .dropdown-content a:hover {
+	background-color: #d4d4d4;
+}
+
+.topMenu .dropdown:hover .dropdown-content {
+	display: block;
+}
+/*
+end menu bar
+*/
+
+/*
+start messages
+*/
+.messages {
+	font-weight: bold;
+	z-index: 1;
+	position: absolute;
+	left: 70%;
+	right: 5%;
+	top: 2%;
+}
+.messages .debug {
+	padding: 20px;
+	background-color: var(--message-debug-color);
+	color: white;
+	margin-bottom: 15px;
+}
+.messages .info {
+	padding: 20px;
+	background-color: var(--message-info-color);
+	color: white;
+	margin-bottom: 15px;
+}
+.messages .success {
+	padding: 20px;
+	background-color: var(--message-success-color);
+	color: white;
+	margin-bottom: 15px;
+}
+.messages .warning {
+	padding: 20px;
+	background-color: var(--message-warning-color);
+	color: white;
+	margin-bottom: 15px;
+}
+.messages .error {
+	padding: 20px;
+	background-color: var(--message-error-color);
+	color: white;
+	margin-bottom: 15px;
+}
+.messages .closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.messages .closebtn:hover {
+	color: black;
+}
+/*
+end messages
+*/
+
+/*
+start footer
+*/
+footer {
+	list-style-type: none;
+	padding: 1vw;
+	margin: 0;
+	overflow: hidden;
+	background-color: var(--bar-main-color);
+	color: var(--bar-text-color)
+}
+
+.pagination a:link, .pagination a:visited {
+	background-color: var(--bar-main-color);
+	color: var(--bar-text-color);
+	padding: 1vh 1vw;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.pagination a:hover, .pagination a:active {
+	background-color: var(--bar-second-color);
+}
+ /*
+ end footer
+ */

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import subprocess
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +26,12 @@ SECRET_KEY = '&tz7(girma1jm%%j=u8(&b=w5^(0+kf5fq*hzuf$6e4(v^%%ew'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+try:
+    INTERFACE = 'en0'
+    ALLOWED_HOSTS.append(subprocess.check_output(['ipconfig', 'getifaddr', INTERFACE]).decode('utf-8')[:-1])
+except subprocess.CalledProcessError:
+    print("ERROR: unable to add local IP -> try to connect to wifi or change INFERFACE (%s)" % (INTERFACE))
 
 # Application definition
 

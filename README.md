@@ -1,5 +1,5 @@
 # 4L-connect
-4L connecté pour le 4L trophy 2021
+connected 4L for 4L trophy (2021)
 
 ## ⚠️ WORK IN PROGRESS ⚠️
 

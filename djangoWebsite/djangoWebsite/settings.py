@@ -27,11 +27,11 @@ SECRET_KEY = '&tz7(girma1jm%%j=u8(&b=w5^(0+kf5fq*hzuf$6e4(v^%%ew'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-try:
-    INTERFACE = 'en0'
-    ALLOWED_HOSTS.append(subprocess.check_output(['ipconfig', 'getifaddr', INTERFACE]).decode('utf-8')[:-1])
-except subprocess.CalledProcessError:
-    print("ERROR: unable to add local IP -> try to connect to wifi or change INFERFACE (%s)" % (INTERFACE))
+# try:
+#     INTERFACE = 'en0'
+#     ALLOWED_HOSTS.append(subprocess.check_output(['ipconfig', 'getifaddr', INTERFACE]).decode('utf-8')[:-1])
+# except subprocess.CalledProcessError:
+#     print("ERROR: unable to add local IP -> try to connect to wifi or change INFERFACE (%s)" % (INTERFACE))
 
 # Application definition
 

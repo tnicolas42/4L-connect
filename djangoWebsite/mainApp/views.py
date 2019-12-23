@@ -40,6 +40,12 @@ class IO:
 		if asGPIO:
 			GPIO.output(channel, state)
 
+	@staticmethod
+	def exit():
+		print("[INFO]: cleanup GPIO")
+		if asGPIO:
+			GPIO.cleanup()
+
 
 IO_MAIN_LED = 17
 
@@ -47,6 +53,9 @@ def runAtStartup():
 	IO.init()
 	IO.setup(IO_MAIN_LED, GPIO.OUT)
 	IO.output(IO_MAIN_LED, GPIO.LOW)
+
+def runAtExit():
+	IO.exit()
 
 def home(request: HttpRequest):
 	return render(request, 'mainApp/home.html')

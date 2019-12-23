@@ -2,17 +2,13 @@
 {% load static %}
 
 {% block head %}
-  <link rel="stylesheet" href="{% static 'mainApp/mainApp.css' %}"/>
+	<script src="{% static 'mainApp/js/app.js' %}"></script>
 {% endblock head %}
 
 
 {% block content %}
 	<div style="display: flex;">
-		<button onclick="window.location.href = '{% url 'mainApp:setLed' %}?enable=1';" class="button">
-			LED ON
-		</button>
-		<button onclick="window.location.href = '{% url 'mainApp:setLed' %}?enable=0';" class="button">
-			LED OFF
-		</button>
+		<button onclick="setLed(1)", class="button">LED ON</button>
+		<button onclick="setLed(0)", class="button">LED OFF</button>
 	</div>
 {% endblock content %}

@@ -2,4 +2,6 @@
 
 {% block content %}
 	<h1>home</h1>
+	<a href="{% url 'mainApp:setLed' %}?enable=1">enable led</a>
+	<a href="{% url 'mainApp:setLed' %}?enable=0">disable led</a>
 {% endblock content %}

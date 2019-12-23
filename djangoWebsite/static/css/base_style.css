@@ -19,6 +19,14 @@ body {
 	margin: 1%;
 }
 
+.button {
+	border-radius: 10px;
+	padding: 10px 24px;
+	font-size: 16px;
+	color: var(--bar-text-color);
+	background-color: var(--bar-main-color);
+}
+
 /*
 start menu bar
 */

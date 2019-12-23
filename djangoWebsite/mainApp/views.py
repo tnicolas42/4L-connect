@@ -46,6 +46,7 @@ IO_MAIN_LED = 17
 def runAtStartup():
 	IO.init()
 	IO.setup(IO_MAIN_LED, GPIO.OUT)
+	IO.output(IO_MAIN_LED, GPIO.LOW)
 
 def home(request: HttpRequest):
 	return render(request, 'mainApp/home.html')

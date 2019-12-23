@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'mainApp/mainApp.css' %}"/>
+{% endblock head %}
+
 
 {% block content %}
-	<h1>home</h1>
-	<a href="{% url 'mainApp:setLed' %}?enable=1">enable led</a>
-	<a href="{% url 'mainApp:setLed' %}?enable=0">disable led</a>
+	<div style="display: flex;">
+		<form action="{% url 'mainApp:setLed' %}?enable=1">
+			<input type="submit" value="LED ON" class="button"/>
+		</form>
+		<form action="{% url 'mainApp:setLed' %}?enable=0">
+			<input type="submit" value="LED OFF" class="button"/>
+		</form>
+	</div>
 {% endblock content %}

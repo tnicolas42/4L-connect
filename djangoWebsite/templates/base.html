@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <title>{% block title %}Titre du site{% endblock %}</title>
-   <link rel="stylesheet" href="/static/css/base_style.css"/>
-   {% block head %}{% endblock head %}
+  <title>{% block title %}Titre du site{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/base_style.css"/>
+  {% block head %}{% endblock head %}
 </head>
 <body>
 	<header>
@@ -24,7 +24,7 @@
 			{% block nav %}
 				<ul class="topMenu">
 					<li class="dropdown">
-						<a class="dropbtn" href="{% url "mainApp:home" %}">testapp</a>
+						<a class="dropbtn" href="{% url "mainApp:home" %}">Led control</a>
 						<div class="dropdown-content">
 							<a href="{% url "mainApp:home" %}">Home</a>
 						</div>

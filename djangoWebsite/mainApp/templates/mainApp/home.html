@@ -8,11 +8,11 @@
 
 {% block content %}
 	<div style="display: flex;">
-		<form action="{% url 'mainApp:setLed' %}?enable=1">
-			<input type="submit" value="LED ON" class="button"/>
-		</form>
-		<form action="{% url 'mainApp:setLed' %}?enable=0">
-			<input type="submit" value="LED OFF" class="button"/>
-		</form>
+		<button onclick="window.location.href = '{% url 'mainApp:setLed' %}?enable=1';" class="button">
+			LED ON
+		</button>
+		<button onclick="window.location.href = '{% url 'mainApp:setLed' %}?enable=0';" class="button">
+			LED OFF
+		</button>
 	</div>
 {% endblock content %}

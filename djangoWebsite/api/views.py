@@ -51,7 +51,7 @@ IO_MAIN_LED = 17
 def runAtStartup():
 	IO.init()
 	IO.setup(IO_MAIN_LED, GPIO.OUT)
-	IO.output(IO_MAIN_LED, GPIO.LOW)
+	IO.output(IO_MAIN_LED, GPIO.HIGH)
 
 def runAtExit():
 	IO.exit()
@@ -61,5 +61,5 @@ def setLed(request: HttpRequest):
 		enable = int(request.GET['enable'])
 	except Exception:
 		enable = 0
-	IO.output(IO_MAIN_LED, GPIO.HIGH if enable else GPIO.LOW)
+	IO.output(IO_MAIN_LED, GPIO.LOW if enable else GPIO.HIGH)
 	return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

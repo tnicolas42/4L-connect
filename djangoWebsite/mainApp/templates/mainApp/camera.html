@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+	<script src="{% static 'mainApp/js/app.js' %}"></script>
+{% endblock head %}
+
+
+{% block content %}
+	<div style="display: flex;">
+		<img style="-webkit-user-select: none;margin: auto;"
+			src="http://localhost:8000/api/cameraStream"
+		/>
+	</div>
+{% endblock content %}

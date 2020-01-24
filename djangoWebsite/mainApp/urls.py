@@ -5,4 +5,5 @@ app_name = 'mainApp'
 
 urlpatterns = [
 	url(r'^$', views.home, name='home'),
+	url(r'^camera$', views.camera, name='camera'),
 ]

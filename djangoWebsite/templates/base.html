@@ -24,11 +24,11 @@
 			{% block nav %}
 				<ul class="topMenu">
 					<li class="dropdown">
-						<a class="dropbtn" href="{% url "mainApp:home" %}">Led control</a>
-						<div class="dropdown-content">
-							<a href="{% url "mainApp:home" %}">Home</a>
-						</div>
+						<a class="dropbtn" href="{% url "mainApp:home" %}">Home</a>
 					</li>
+						<li>
+							<a href="{% url 'mainApp:camera' %}?next={% if next %}{{ next }}{% else %}{{ request.path }}{% endif %}">Camera</a>
+						</li>
 					{% if user.is_authenticated %}
 						<li style="float:right">
 							<a href="{% url 'global:logout' %}?next={% if next %}{{ next }}{% else %}{{ request.path }}{% endif %}">logout {{ user.username }}</a>

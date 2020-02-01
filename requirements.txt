@@ -3,3 +3,4 @@ ipython==7.9.0
 bpython==0.18
 flake8==3.7.9
 opencv-python==4.0.1.24
+RPi.GPIO==0.7.0

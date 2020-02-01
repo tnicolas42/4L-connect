@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 # add this line to /etc/rc.local to auto start robot
-#/bin/su -l tim -c ". ~/4L-connect/scripts/launch_at_start.sh"
+#/bin/su -l pi -c "sh -c '/home/pi/4L-connect/scripts/launch_at_start.sh'"
 
 if [[ -z "${LAUNCH_AT_START}" ]]; then
   LAUNCH_AT_START="1"  # set a default value if the env variable doesn't exist
@@ -13,7 +13,7 @@ if [[ "${LAUNCH_AT_START}" == "0" ]]; then
 fi
 
 if [[ "${LAUNCH_AT_START}" == "1" ]]; then
-	./run.sh
+	. ~/4L-connect/scripts/run.sh
 fi
 
 exit 0

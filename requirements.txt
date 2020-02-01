@@ -2,4 +2,4 @@ Django==2.2.8
 ipython==7.9.0
 bpython==0.18
 flake8==3.7.9
-opencv-python==4.1.2.30
+opencv-python==4.0.1.24

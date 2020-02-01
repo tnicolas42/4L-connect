@@ -1,5 +1,11 @@
 #!/bin/zsh
 
+if [[ -z "${TMUX_SESSION}" ]]; then
+  TMUX_SESSION="4L"  # set a default value if the env variable doesn't exist
+else
+  TMUX_SESSION="${TMUX_SESSION}"
+fi
+
 # create the tmux session
 tmux new-session -s $TMUX_SESSION -d "zsh"
 

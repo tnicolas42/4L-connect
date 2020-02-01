@@ -3,12 +3,39 @@
 
 {% block head %}
 	<script src="{% static 'mainApp/js/app.js' %}"></script>
+  <link rel="stylesheet" href="/static/css/w3.css"/>
 {% endblock head %}
 
 
 {% block content %}
-	<div style="display: flex;">
-		<button onclick="setLed(1)", class="button">LED ON</button>
-		<button onclick="setLed(0)", class="button">LED OFF</button>
+	<div style="display: flex; flex-wrap: wrap;">
+
+			<div class="rect" style="width: 30vw">
+				<p>Essence</p>
+				<div class="w3-light-grey">
+					<div class="w3-container w3-green w3-center" style="width:0%" id="essence">0%</div>
+				</div>
+			</div>
+
+			<div class="rect" style="width: 30vw">
+				<p>Batterie principale</p>
+				<div class="w3-light-grey">
+					<div class="w3-container w3-green w3-center" style="width:0%" id="mainBattery">0%</div>
+				</div>
+			</div>
+
+			<div class="rect" style="width: 30vw">
+				<p>Batterie secondaire</p>
+				<div class="w3-light-grey">
+					<div class="w3-container w3-green w3-center" style="width:0%" id="secondaryBattery">0%</div>
+				</div>
+			</div>
+
+			<div class="rect" style="width: 20vw">
+				<p>Phare LED</p>
+				<button onclick="setLed(1)", class="button">ON</button>
+				<button onclick="setLed(0)", class="button">OFF</button>
+			</div>
+
 	</div>
 {% endblock content %}

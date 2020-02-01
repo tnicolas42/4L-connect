@@ -1,5 +1,6 @@
 import cv2
-from django.http import HttpRequest, HttpResponseRedirect
+import json
+from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 
 IO_MAIN_LED = 17
 CAMERA_ID = 0
@@ -58,6 +59,18 @@ def runAtExit():
     IO.exit()
 
 ##### CONTROLS #####
+
+### getter ###
+def getInfo(request: HttpRequest):
+	print("[WARN]: getInfo to do")  # TODO
+	data = {
+		'mainBattery': 45,
+		'secondaryBattery': 93,
+		'essence': 22,
+	}
+	return JsonResponse(data)
+
+### setter ###
 def setLed(request: HttpRequest):
     try:
         enable = int(request.GET['enable'])

@@ -27,6 +27,25 @@ body {
 	background-color: var(--bar-main-color);
 }
 
+.rect {
+	display: flex;
+	border-radius: 10px;
+	padding: 10px 10px;
+	font-size: 16px;
+	border-color: var(--bar-main-color);
+	border-style: solid;
+	border-width: 2px;
+	flex-direction: column;
+	justify-content: space-around;
+	margin: 10px;
+}
+
+.rect p {
+	color: var(--bar-main-color);
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
 /*
 start menu bar
 */

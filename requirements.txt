@@ -1,4 +1,4 @@
-Django==2.2.8
+Django==2.2.10
 ipython==7.9.0
 bpython==0.18
 flake8==3.7.9

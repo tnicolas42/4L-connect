@@ -27,4 +27,12 @@ Initialisez un environnement virtuel python3.x
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
+
+# create database
+cd djangoWebsite
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser  # create first user
 ```
+
+## Usage

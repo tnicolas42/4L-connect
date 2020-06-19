@@ -1,38 +1,41 @@
 #include "voltmeter.hpp"  // ln -s ../includes/voltmeter.hpp voltmeter.hpp
 
-#define FPS 20
+#define FPS 2
 #define TIME_LOOP_MS 1000 / FPS
 
-int voltPin = A0;
-Volt::Voltmeter voltmeter(voltPin);
+Volt::Voltmeter mainBatteryVoltmetter(A0);
+Volt::Voltmeter secondaryBatteryVoltmetter(A1);
+Volt::Voltmeter essenceVoltmetter(A2);
 
 struct Info {
-	float voltage;
+	float mainBatteryVolt;
+	float secondaryBatteryVolt;
+	float essenceVolt;
 };
 struct Info info;
 
 void setup() {
     Serial.begin(9600);
-
-	/* write a voltage //! to delete */
-	pinMode(7, OUTPUT);
 }
 
 int val;
 void update() {
-	/* write a voltage //! to delete */
-	val = random() % 2;
-	digitalWrite(7, val);
-
 	/* get the voltage */
-	info.voltage = voltmeter.getVoltage();
+	info.mainBatteryVolt = mainBatteryVoltmetter.getVoltage();
+	info.secondaryBatteryVolt = secondaryBatteryVoltmetter.getVoltage();
+	info.essenceVolt = essenceVoltmetter.getVoltage();
+}
+
+void sendFloat(String name, float value) {
+	Serial.print(name);
+	Serial.print(":");
+	Serial.println(value);
 }
 
 void send() {
-	Serial.println("<<<");
-    Serial.println(val);
-    Serial.println(info.voltage);
-	Serial.println(">>>");
+    sendFloat("mainBattery", info.mainBatteryVolt);
+    sendFloat("secondaryBattery", info.secondaryBatteryVolt);
+    sendFloat("essence", info.essenceVolt);
 }
 
 

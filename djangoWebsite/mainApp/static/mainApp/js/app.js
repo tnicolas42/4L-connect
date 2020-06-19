@@ -20,6 +20,7 @@ function call(arg) {
 	}
 	request.send()
 	console.log('[API CALL]: /' + arg)
+	console.log(data)
 	return data
 }
 
@@ -31,15 +32,21 @@ function setLed(arg) {
 	call('setLed?enable=' + arg)
 }
 
-function printPercent(name, value) {
+function printPercent(name, percent, voltage = -1) {
 	var element = document.getElementById(name);
-	element.textContent = value + "%"
-	element.style = "width:" + value + "%"
-	if (value < 25 && element.classList.contains('w3-green')) {
+	var text = element.firstChild;
+	if (voltage == -1) {
+		text.textContent = percent + "%"
+	}
+	else {
+		text.textContent = percent + "% - " + voltage + "V"
+	}
+	element.style = "width:" + percent + "%"
+	if (percent < 25 && element.classList.contains('w3-green')) {
 		element.classList.remove("w3-green")
 		element.classList.add("w3-red")
 	}
-	else if (value >= 25 && element.classList.contains('w3-red')) {
+	else if (percent >= 25 && element.classList.contains('w3-red')) {
 		element.classList.remove("w3-red")
 		element.classList.add("w3-green")
 	}
@@ -50,19 +57,19 @@ async function update() {
 	while (1) {
 		var res = call('getInfo')
 		try {
-			printPercent("essence", res.essence)
+			printPercent("essence", 100, res.essence)
 		} catch {
-			console.log("unable to set essence")
+			console.log("unable to get essence")
 		}
 		try {
-			printPercent("mainBattery", res.mainBattery)
+			printPercent("mainBattery", res.mainBatteryPercent, res.mainBatteryVolt)
 		} catch {
-			console.log("unable to set mainBattery")
+			console.log("unable to get mainBattery")
 		}
 		try {
-			printPercent("secondaryBattery", res.secondaryBattery)
+			printPercent("secondaryBattery", res.secondaryBatteryPercent, res.secondaryBatteryVolt)
 		} catch {
-			console.log("unable to set secondaryBattery")
+			console.log("unable to get secondaryBattery")
 		}
 		await sleep(1000)
 	}

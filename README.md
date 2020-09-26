@@ -97,7 +97,7 @@ Reboot
 ### reconnect to wifi
 Pour réinitialiser la configuration réseau du Raspberry pi (https://raspberrypi.stackexchange.com/questions/72668/how-to-disable-wireless-ap-on-razberry):
 ```bash
-sudo systemctl stop hostapd
+sudo systemctl disable hostapd
 sudo vim /etc/dhcpcd.conf
 ```
 Et commenter les dernières lignes

@@ -7,7 +7,8 @@ from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 IO_MAIN_LED = 17
 CAMERA_ID = 0
 
-ARDUINO_PORT = '/dev/tty.usbmodem14201'
+#ARDUINO_PORT = '/dev/tty.usbmodem14201'
+ARDUINO_PORT = '/dev/arduinobase'
 ARDUINO_BAUD_RATE = 9600
 
 asGPIO = False
@@ -179,6 +180,7 @@ def getInfo(request: HttpRequest):
         'secondaryBatteryPercent': percentFromVoltage(Arduino.getFloat('secondaryBattery')),
         'essence': Arduino.getFloat('essence'),
     }
+    print(data)
     return JsonResponse(data)
 
 ### setter ###

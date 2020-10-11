@@ -33,6 +33,7 @@ try:
     # INTERFACE = 'wlan0'
 #    ALLOWED_HOSTS.append(subprocess.check_output(['ipconfig', 'getifaddr', INTERFACE]).decode('utf-8')[:-1])
     ip = os.environ['IP_4L']
+    print(ip)
     ALLOWED_HOSTS.append(ip)
 except subprocess.CalledProcessError:
     log.err("ERROR: unable to add local IP -> try to connect to wifi or change INFERFACE (%s)" % (INTERFACE))

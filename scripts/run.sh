@@ -25,9 +25,8 @@ tmux new-session -s $TMUX_SESSION -d "zsh"
 # *-------------------*--------------------*
 
 # run django server
-tmux send-keys -t $TMUX_SESSION:0.0 'while [ 1 ]; do source ~/.zshrc ; cd $DIR4L/djangoWebsite ; source ~/.profile ; workon cv ; python3 manage.py runserver ; if [ "`echo $?`" == "0" ]; then break ; fi ; sleep 1 ; done' C-m
+#tmux send-keys -t $TMUX_SESSION:0.0 'while [ 1 ]; do source ~/.zshrc ; cd $DIR4L/djangoWebsite ; source ~/.profile ; workon cv ; python3 manage.py runserver ; if [ "`echo $?`" == "0" ]; then break ; fi ; sleep 1 ; done' C-m
+tmux send-keys -t $TMUX_SESSION:0.0 'while [ 1 ]; do source ~/.zshrc ; cd $DIR4L/djangoWebsite ; source ~/4L-connect/venv/bin/activate ; python3 manage.py runserver --insecure $IP_4L:8000 ; if [ "`echo $?`" == "0" ]; then break ; fi ; sleep 1 ; done' C-m
 
 echo "access with: tmux a -t $TMUX_SESSION"
 echo "stop with: ./kill.sh"
-
-exit 0

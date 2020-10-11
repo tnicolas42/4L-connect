@@ -1,4 +1,4 @@
-var baseAPI = 'http://localhost:8000/api/'
+var baseAPI = 'http://192.168.0.1:8000/api/'
 
 var data;
 

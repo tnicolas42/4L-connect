@@ -5,6 +5,8 @@ from djangoWebsite import logging as log
 from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
 
 IO_MAIN_LED = 17
+IO_OUTPUT_2 = 27
+IO_OUTPUT_3 = 22
 CAMERA_ID = 0
 
 #ARDUINO_PORT = '/dev/tty.usbmodem14201'

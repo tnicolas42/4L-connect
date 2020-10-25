@@ -3,14 +3,14 @@
 #define FPS 2
 #define TIME_LOOP_MS 1000 / FPS
 
-Volt::Voltmeter mainBatteryVoltmetter(A0);
-Volt::Voltmeter secondaryBatteryVoltmetter(A1);
-Volt::Voltmeter essenceVoltmetter(A2);
+Volt::Voltmeter voltmeterA0(A0);  // main battery
+Volt::Voltmeter voltmeterA1(A1);  // 12V alimentation
+Volt::Voltmeter voltmeterA2(A2);  // essence
 
 struct Info {
-	float mainBatteryVolt;
-	float secondaryBatteryVolt;
-	float essenceVolt;
+	float voltA0;
+	float voltA1;
+	float voltA2;
 };
 struct Info info;
 
@@ -21,9 +21,9 @@ void setup() {
 int val;
 void update() {
 	/* get the voltage */
-	info.mainBatteryVolt = mainBatteryVoltmetter.getVoltage();
-	info.secondaryBatteryVolt = secondaryBatteryVoltmetter.getVoltage();
-	info.essenceVolt = essenceVoltmetter.getVoltage();
+	info.voltA0 = voltmeterA0.getVoltage();
+	info.voltA1 = voltmeterA1.getVoltage();
+	info.voltA2 = voltmeterA2.getVoltage();
 }
 
 void sendFloat(String name, float value) {
@@ -33,9 +33,9 @@ void sendFloat(String name, float value) {
 }
 
 void send() {
-    sendFloat("mainBattery", info.mainBatteryVolt);
-    sendFloat("secondaryBattery", info.secondaryBatteryVolt);
-    sendFloat("essence", info.essenceVolt);
+    sendFloat("A0", info.voltA0);
+    sendFloat("A1", info.voltA1);
+    sendFloat("A2", info.voltA2);
 }
 
 

@@ -1,4 +1,8 @@
 var baseAPI = 'http://192.168.0.1:8000/api/'
+// var baseAPI = 'http://localhost:8000/api/'
+
+var lowEssence = false;
+var darkMode = true;
 
 var data;
 
@@ -19,7 +23,7 @@ function call(arg) {
 		}
 	}
 	request.send()
-	console.log('[API CALL]: /' + arg)
+	console.log('[API CALL]: ' + baseAPI + arg)
 	console.log(data)
 	return data
 }
@@ -28,8 +32,25 @@ function sleep(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function setLed(arg) {
-	call('setLed?enable=' + arg)
+function setRelay(id, arg) {
+	call('setRelay?id=' + id + '&enable=' + arg)
+}
+
+function setDarkMode(enable) {
+	if (lowEssence) {
+		return;
+	}
+	var body = document.getElementsByTagName("BODY")[0];
+	if (enable) {
+		darkMode = true;
+		if (lowEssence == false)
+			body.style.backgroundColor = "var(--backgroung-dark-color)";
+	}
+	else {
+		darkMode = false;
+		if (lowEssence == false)
+			body.style.backgroundColor = "var(--backgroung-main-color)";
+	}
 }
 
 function printPercent(name, percent, voltage = -1) {
@@ -57,7 +78,7 @@ async function update() {
 	while (1) {
 		var res = call('getInfo')
 		try {
-			printPercent("essence", 100, res.essence)
+			printPercent("essence", res.essencePercent, res.essenceVolt)
 		} catch {
 			console.log("unable to get essence")
 		}
@@ -67,9 +88,32 @@ async function update() {
 			console.log("unable to get mainBattery")
 		}
 		try {
-			printPercent("secondaryBattery", res.secondaryBatteryPercent, res.secondaryBatteryVolt)
-		} catch {
+			if (res.secondaryBatteryVolt > 11)
+				printPercent("alim", 100, res.secondaryBatteryVolt)
+			else
+				printPercent("alim", 0, res.secondaryBatteryVolt)
+			} catch {
 			console.log("unable to get secondaryBattery")
+		}
+		try {
+			if (res.lowEssence)
+				lowEssence = true;
+			else
+				lowEssence = false;
+		} catch {
+			console.log("unable to get low essence information")
+		}
+		var body = document.getElementsByTagName("BODY")[0];
+		if (lowEssence) {
+			body.style.backgroundColor = "var(--backgroung-error-color)";
+		}
+		else {
+			if (darkMode) {
+				body.style.backgroundColor = "var(--backgroung-dark-color)";
+			}
+			else {
+				body.style.backgroundColor = "var(--backgroung-main-color)";
+			}
 		}
 		await sleep(1000)
 	}

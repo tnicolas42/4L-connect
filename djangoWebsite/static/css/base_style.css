@@ -3,16 +3,21 @@
 	--bar-second-color: #00009e;
 	--bar-text-color: #FFFFFF;
 
-	--message-debug-color: #0000FFE0;
-	--message-info-color: #808080E0;
-	--message-success-color: #adff2fE0;
-	--message-warning-color: #ffa500E0;
-	--message-error-color: #FF0000E0;
+	--backgroung-main-color: #FFFFFF;
+	--backgroung-dark-color: #808080;
+	--backgroung-error-color: #a52f3b;
+
+	--message-debug-color: #808080E0;
+	--message-info-color: #91C4F2E0;
+	--message-success-color: #00a878E0;
+	--message-warning-color: #F0C808E0;
+	--message-error-color: #a52f3bE0;
 }
 
 body {
 	margin: 0;
 	padding: 0;
+	background-color: var(--backgroung-main-color);
 }
 
 #content {

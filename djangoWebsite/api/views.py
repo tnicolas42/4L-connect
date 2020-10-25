@@ -1,23 +1,23 @@
-import cv2
+import os
 import serial
 import json
 from djangoWebsite import logging as log
+from djangoWebsite.settings import SIMU_MODE
 from django.http import HttpRequest, HttpResponseRedirect, JsonResponse
+import cv2
 
-IO_MAIN_LED = 17
-IO_OUTPUT_2 = 27
-IO_OUTPUT_3 = 22
+IO_RELAY_OUTPUT = [17, 27, 22]
 CAMERA_ID = 0
 
-#ARDUINO_PORT = '/dev/tty.usbmodem14201'
-ARDUINO_PORT = '/dev/arduinobase'
+if SIMU_MODE:
+    ARDUINO_PORT = '/dev/tty.usbmodem14101'
+else:
+    ARDUINO_PORT = '/dev/arduinobase'
 ARDUINO_BAUD_RATE = 9600
 
-asGPIO = False
-try:
+if not SIMU_MODE:
     import RPi.GPIO as GPIO
-    asGPIO = True
-except ImportError:
+else:
     class GPIO:
         BCM = None
         BOARD = None
@@ -29,7 +29,7 @@ except ImportError:
 class IO:
     @staticmethod
     def init():
-        if asGPIO:
+        if not SIMU_MODE:
             GPIO.setmode(GPIO.BCM)
         else:
             log.err("cannot import RPi.GPIO")
@@ -37,34 +37,34 @@ class IO:
     @staticmethod
     def setup(channel, inOut):
         log.info("setup", channel, "as",  "INPUT" if inOut == GPIO.IN else "OUTPUT")
-        if asGPIO:
+        if not SIMU_MODE:
             GPIO.setup(channel, inOut)
 
     @staticmethod
     def input(channel):
         log.info("read input", channel)
-        if asGPIO:
+        if not SIMU_MODE:
             GPIO.input(channel)
 
     @staticmethod
     def output(channel, state):
         log.info("write", "HIGH" if state == GPIO.HIGH else "LOW", "on", channel)
-        if asGPIO:
+        if not SIMU_MODE:
             GPIO.output(channel, state)
 
     @staticmethod
     def exit():
         log.info("cleanup GPIO")
-        if asGPIO:
+        if not SIMU_MODE:
             GPIO.cleanup()
 
 
 class Arduino:
     arduino = None
     allFloatValues = {
-        'mainBattery': 0,
-        'secondaryBattery': 0,
-        'essence': 0,
+        'A0': 0,  # main battery voltage
+        'A1': 0,  # alim voltage
+        'A2': 0,  # essence
     }
     errCount = 0
 
@@ -88,7 +88,7 @@ class Arduino:
             Arduino.errCount = 0
             Arduino.arduino = None
             Arduino.init()
-        log.info("reading arduino data")
+        # log.info("reading arduino data")
         if Arduino.arduino is None:
             log.err("arduino is not connected")
             Arduino.errCount += 1
@@ -137,8 +137,9 @@ class Arduino:
 
 def runAtStartup():
     IO.init()
-    IO.setup(IO_MAIN_LED, GPIO.OUT)
-    IO.output(IO_MAIN_LED, GPIO.HIGH)
+    for id in IO_RELAY_OUTPUT:
+        IO.setup(id, GPIO.OUT)
+        IO.output(id, GPIO.HIGH)
     Arduino.init()
 
 def runAtExit():
@@ -172,26 +173,39 @@ def percentFromVoltage(voltage):
         percent = 100
     return percent
 
+lowEssence = False
+
 ### getter ###
 def getInfo(request: HttpRequest):
     Arduino.read()
+    essencePercent = min(100, int(Arduino.getFloat('A2') / 12 * 100))
+    if (essencePercent < 20):
+        lowEssence = True
+    if (essencePercent > 30):
+        lowEssence = False
     data = {
-        'mainBatteryVolt': Arduino.getFloat('mainBattery'),
-        'mainBatteryPercent': percentFromVoltage(Arduino.getFloat('mainBattery')),
-        'secondaryBatteryVolt': Arduino.getFloat('secondaryBattery'),
-        'secondaryBatteryPercent': percentFromVoltage(Arduino.getFloat('secondaryBattery')),
-        'essence': Arduino.getFloat('essence'),
+        'mainBatteryVolt': Arduino.getFloat('A0'),
+        'mainBatteryPercent': percentFromVoltage(Arduino.getFloat('A0')),
+        'alimVolt': Arduino.getFloat('A1'),
+        'essenceVolt': Arduino.getFloat('A2'),
+        'essencePercent': essencePercent,
+        'lowEssence': lowEssence,
     }
-    print(data)
+    # print(data)
     return JsonResponse(data)
 
 ### setter ###
-def setLed(request: HttpRequest):
+def setRelay(request: HttpRequest):
     try:
+        id = int(request.GET['id'])
         enable = int(request.GET['enable'])
     except Exception:
-        enable = 0
-    IO.output(IO_MAIN_LED, GPIO.LOW if enable else GPIO.HIGH)
+        id = None
+        enable = None
+    if id is not None and enable is not None:
+        IO.output(IO_RELAY_OUTPUT[id], GPIO.LOW if enable else GPIO.HIGH)
+    else:
+        print("[ERROR]: invalid request (id=<int>&enable=<bool>)")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 ##### CAMERA #####

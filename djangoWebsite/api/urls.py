@@ -10,7 +10,7 @@ atexit.register(views.runAtExit)
 
 urlpatterns = [
 	url(r'^getInfo$', views.getInfo, name='getInfo'),
-	url(r'^setLed$', views.setLed, name='setLed'),
+	url(r'^setRelay$', views.setRelay, name='setRelay'),
     url(r'^cameraStream$', lambda r: StreamingHttpResponse(views.cameraStream(),
                     content_type='multipart/x-mixed-replace; boundary=frame'),
 					name='cameraStream'),

@@ -27,16 +27,11 @@ SECRET_KEY = '&tz7(girma1jm%%j=u8(&b=w5^(0+kf5fq*hzuf$6e4(v^%%ew'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-try:
-    INTERFACE = 'lo0'
-    # INTERFACE = 'wlan0'
-#    ALLOWED_HOSTS.append(subprocess.check_output(['ipconfig', 'getifaddr', INTERFACE]).decode('utf-8')[:-1])
-    ip = os.environ['IP_4L']
-    print(ip)
-    ALLOWED_HOSTS.append(ip)
-except subprocess.CalledProcessError:
-    log.err("ERROR: unable to add local IP -> try to connect to wifi or change INFERFACE (%s)" % (INTERFACE))
+ALLOWED_HOSTS= ['*']
+SIMU_MODE = False
+if os.environ.get("SIMU", "") != "":
+    print("[INFO]: running on simu mode")
+    SIMU_MODE = True
 
 # Application definition
 
